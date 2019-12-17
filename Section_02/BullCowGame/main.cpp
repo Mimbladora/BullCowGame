@@ -4,23 +4,23 @@
 using namespace std;
 
 void PrintIntro();
-string GetGuessAndPrintBack();
+void PlayGame();
+string GetGuess();
+bool AskToPlayAgain();
 
 // the entry point for our application
 int main()
 {
-	PrintIntro();
-
-	// loop for the number of turns asking for guesses
-	constexpr int NUMBER_OF_TURNS = 5;
-	for (int count = 1; count <= NUMBER_OF_TURNS; count++) 
+	bool bPlayAgain = false;
+	do
 	{
-		GetGuessAndPrintBack();
-		cout << endl;
-	}
-	
-	cout << endl;
-	return 0;
+		PrintIntro();
+		PlayGame();
+		bPlayAgain = AskToPlayAgain();
+	} 
+	while (bPlayAgain);
+
+		return 0;
 }
 
 // introduce the game
@@ -34,15 +34,31 @@ void PrintIntro()
 	return;
 }
 
+void PlayGame()
+{
+	// loop for the number of turns asking for guesses
+	constexpr int NUMBER_OF_TURNS = 5;
+	for (int count = 1; count <= NUMBER_OF_TURNS; count++)
+	{
+		string Guess = GetGuess();
+		cout << "Twoj wyraz to: " << Guess << endl;
+		cout << endl;
+	}
+}
 
-string GetGuessAndPrintBack() 
+string GetGuess() 
 {
 	// get a guess from the player
 	cout << "Napisz tutaj wyraz, graczu: ";
 	string Guess = "";
 	getline(cin, Guess);
-
-	// print the guess back
-	cout << "Twoj wyraz, graczu, to: " << Guess << endl;
 	return Guess;
+}
+
+bool AskToPlayAgain()
+{
+	cout << "Musisz zagrac jeszcze raz. To rozkaz. (TAK JEST!/NO NIE WIEM...) ";
+	string Response = "";
+	getline(cin, Response);
+	return (Response[0] == 't' || Response[0] == 'T');
 }
