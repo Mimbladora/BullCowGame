@@ -32,9 +32,8 @@ int main()
 // introduce the game
 void PrintIntro() 
 {
-	constexpr int32 WORD_LENGTH = 5;
 	std::cout << "Witejcie w gierce o byczkoch i krowkach, jest to powazna gra w zgadywanie wyrazow." << std::endl;
-	std::cout << "Czy dasz rade zgadnac " << WORD_LENGTH;
+	std::cout << "Czy dasz rade zgadnac " << BCGAme.GetHiddenWordLength();
 	std::cout << " literowy wyraz, ktory mam na mysli?\n";
 	std::cout << std::endl;
 	return;
@@ -49,7 +48,10 @@ void PlayGame()
 	for (int32 count = 1; count <= MaxTries; count++)
 	{
 		FText Guess = GetGuess();
-		std::cout << "Twoj wyraz to: " << Guess << std::endl;
+		EGuessStatus Status = BCGAme.CheckGuessValidity(Guess);
+		FBullCowCount BullCowCount = BCGAme.SubmitGuess(Guess);
+		std::cout << "Bulls = " << BullCowCount.Bulls;
+		std::cout << ". Cows = " << BullCowCount.Cows << std::endl;
 		std::cout << std::endl;
 	}
 }
