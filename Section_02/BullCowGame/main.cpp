@@ -1,16 +1,22 @@
 ﻿#include <iostream>
 #include <string>
+#include "FBullCowGame.h"
 
-using namespace std;
+using FText = std::string;
+using int32 = int;
 
 void PrintIntro();
 void PlayGame();
-string GetGuess();
+FText GetGuess();
 bool AskToPlayAgain();
+
+FBullCowGame BCGAme; // juz nie wiem co
 
 // the entry point for our application
 int main()
 {
+	std::cout << BCGAme.GetCurrentTry();
+
 	bool bPlayAgain = false;
 	do
 	{
@@ -26,39 +32,43 @@ int main()
 // introduce the game
 void PrintIntro() 
 {
-	constexpr int WORD_LENGTH = 9;
-	cout << "Witejcie w gierce o byczkoch i krowkach, jest to powazna gra w zgadywanie wyrazow." << endl;
-	cout << "Czy dasz rade zgadnac " << WORD_LENGTH;
-	cout << " literowy wyraz, ktory mam na mysli?\n";
-	cout << endl;
+	constexpr int32 WORD_LENGTH = 5;
+	std::cout << "Witejcie w gierce o byczkoch i krowkach, jest to powazna gra w zgadywanie wyrazow." << std::endl;
+	std::cout << "Czy dasz rade zgadnac " << WORD_LENGTH;
+	std::cout << " literowy wyraz, ktory mam na mysli?\n";
+	std::cout << std::endl;
 	return;
 }
 
 void PlayGame()
 {
+	BCGAme.Reset();
+	int32 MaxTries = BCGAme.GetMaxTries();
+	
 	// loop for the number of turns asking for guesses
-	constexpr int NUMBER_OF_TURNS = 5;
-	for (int count = 1; count <= NUMBER_OF_TURNS; count++)
+	for (int32 count = 1; count <= MaxTries; count++)
 	{
-		string Guess = GetGuess();
-		cout << "Twoj wyraz to: " << Guess << endl;
-		cout << endl;
+		FText Guess = GetGuess();
+		std::cout << "Twoj wyraz to: " << Guess << std::endl;
+		std::cout << std::endl;
 	}
 }
 
-string GetGuess() 
+FText GetGuess() 
 {
+	int32 CurrentTry = BCGAme.GetCurrentTry();
+
 	// get a guess from the player
-	cout << "Napisz tutaj wyraz, graczu: ";
-	string Guess = "";
-	getline(cin, Guess);
+	std::cout << "Sproboj po raz " << CurrentTry << ". Napisz wyraz: ";
+	FText Guess = "";
+	std::getline(std::cin, Guess);
 	return Guess;
 }
 
 bool AskToPlayAgain()
 {
-	cout << "Musisz zagrac jeszcze raz. To rozkaz. (TAK JEST!/NO NIE WIEM...) ";
-	string Response = "";
-	getline(cin, Response);
+	std::cout << "Musisz zagrac jeszcze raz. To rozkaz. (TAK JEST!/NO NIE WIEM...) ";
+	FText Response = "";
+	std::getline(std::cin, Response);
 	return (Response[0] == 't' || Response[0] == 'T');
 }
