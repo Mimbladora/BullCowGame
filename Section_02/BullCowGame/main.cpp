@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#pragma once
+#include <iostream>
 #include <string>
 #include "FBullCowGame.h"
 
@@ -61,25 +62,25 @@ FText GetValidGuess()
 	do
 	{
 		int32 CurrentTry = BCGAme.GetCurrentTry();
-		std::cout << "Sproboj po raz " << CurrentTry << ". Napisz wyraz: ";
+		std::cout << "Próba " << CurrentTry << " z " << BCGAme.GetMaxTries();
+		std::cout << " Napisz wyraz: ";
 		std::getline(std::cin, Guess);
 
 		Status = BCGAme.CheckGuessValidity(Guess);
 		switch (Status)
 		{
 		case EGuessStatus::Wrong_Length:
-			std::cout << " No no, ktos tu chce umrzec. Wyraz musi miec " << BCGAme.GetHiddenWordLength() << " liter. \n";
+			std::cout << " No no, ktos tu chce umrzec. Wyraz musi miec " << BCGAme.GetHiddenWordLength() << " liter. \n\n";
 			break;
 		case EGuessStatus::Not_Isogram:
-			std::cout << " Papug, głupcze! Wyraz nie moze miec powtarzalnych liter! \n";
+			std::cout << " Papug, głupcze! Wyraz nie moze miec powtarzalnych liter! \n\n";
 			break;
 		case EGuessStatus::Not_Lowercase:
-			std::cout << " Tylko male litery sa akceptowalne... \n";
+			std::cout << " Tylko male litery sa akceptowalne... \n\n";
 			break;
 		default:
 			break;
 		}
-		std::cout << std::endl;
 	} while (Status != EGuessStatus::OK);
 	return Guess;
 }
